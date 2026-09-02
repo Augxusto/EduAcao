@@ -1,0 +1,20 @@
+services:
+  mongodb:
+    image: mongo:8.0
+    container_name: eduacao-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: eduacao
+      MONGO_INITDB_ROOT_PASSWORD: eduacao
+      MONGO_INITDB_DATABASE: eduacao
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  mongodb_data:
