@@ -17,4 +17,7 @@ public interface ProblemaRepository extends MongoRepository<Problema, String> {
             PrioridadeProblema prioridade,
             Pageable pageable
     );
+
+    Page<Problema> findByEscolaIdAndArquivadoFalse(String escolaId, Pageable pageable);
+
 }
