@@ -1,4 +1,4 @@
-package br.com.eduacao.repository;
+package br.com.eduacao.domain.repository;
 
 import br.com.eduacao.domain.enums.CategoriaProblema;
 import br.com.eduacao.domain.enums.PrioridadeProblema;
