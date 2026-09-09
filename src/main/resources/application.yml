@@ -15,3 +15,8 @@ management:
   endpoint:
     health:
       show-details: never
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
