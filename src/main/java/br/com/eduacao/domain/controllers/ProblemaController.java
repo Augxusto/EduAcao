@@ -6,6 +6,7 @@ import br.com.eduacao.domain.service.ProblemaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +19,10 @@ import java.util.List;
         name = "Problemas",
         description = "Cadastro e acompanhamento de problemas educacionais"
 )
+@RequiredArgsConstructor
 public class ProblemaController {
 
     private final ProblemaService problemaService;
-
-    public ProblemaController(ProblemaService problemaService) {
-        this.problemaService = problemaService;
-    }
 
     @PostMapping
     @Operation(summary = "Cadastrar um problema educacional")

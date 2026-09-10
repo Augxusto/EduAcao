@@ -5,6 +5,8 @@ import br.com.eduacao.domain.enums.PrioridadeProblema;
 import br.com.eduacao.domain.enums.StatusProblema;
 import br.com.eduacao.domain.model.Problema;
 import br.com.eduacao.domain.repository.ProblemaRepository;
+import br.com.eduacao.domain.repository.EscolaRepository;
+import br.com.eduacao.domain.repository.UsuarioRepository;
 import br.com.eduacao.domain.service.ProblemaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +33,12 @@ class ProblemaServiceTest {
     @Mock
     private ProblemaRepository problemaRepository;
 
+    @Mock
+    private EscolaRepository escolaRepository;
+
+    @Mock
+    private UsuarioRepository usuarioRepository;
+
     @InjectMocks
     private ProblemaService problemaService;
 
@@ -43,17 +51,49 @@ class ProblemaServiceTest {
         problema.setCategoria(CategoriaProblema.TECNOLOGIA);
         problema.setPrioridade(PrioridadeProblema.ALTA);
         problema.setStatus(StatusProblema.ABERTO);
+        problema.setQuantidadePessoasAfetadas(30);
+        problema.setEscolaId("escola-1");
+        problema.setUsuarioId("usuario-1");
+        problema.setTurma("6º ano B");
     }
 
     @Test
     void deveCadastrarProblemaComSucesso() {
+        when(escolaRepository.existsById("escola-1")).thenReturn(true);
+        when(usuarioRepository.existsById("usuario-1")).thenReturn(true);
         when(problemaRepository.save(any(Problema.class))).thenReturn(problema);
 
         Problema resultado = problemaService.cadastrar(problema);
 
         assertNotNull(resultado);
         assertEquals("Sem conexão no laboratório", resultado.getTitulo());
+        assertEquals(PrioridadeProblema.ALTA, resultado.getPrioridade());
         verify(problemaRepository, times(1)).save(problema);
+    }
+
+    @Test
+    void deveAumentarPrioridadeParaCategoriaAgravante() {
+        problema.setCategoria(CategoriaProblema.ACESSIBILIDADE);
+        problema.setQuantidadePessoasAfetadas(5);
+        when(escolaRepository.existsById("escola-1")).thenReturn(true);
+        when(usuarioRepository.existsById("usuario-1")).thenReturn(true);
+        when(problemaRepository.save(any(Problema.class))).thenReturn(problema);
+
+        Problema resultado = problemaService.cadastrar(problema);
+
+        assertEquals(PrioridadeProblema.MEDIA, resultado.getPrioridade());
+    }
+
+    @Test
+    void naoDeveCadastrarProblemaComEscolaInexistente() {
+        when(escolaRepository.existsById("escola-1")).thenReturn(false);
+
+        IllegalArgumentException erro = assertThrows(
+                IllegalArgumentException.class,
+                () -> problemaService.cadastrar(problema)
+        );
+
+        assertEquals("Escola não encontrada com o ID: escola-1", erro.getMessage());
     }
 
     @Test

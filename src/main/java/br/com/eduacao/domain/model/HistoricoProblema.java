@@ -1,6 +1,11 @@
 package br.com.eduacao.domain.model;
 
 import br.com.eduacao.domain.enums.StatusProblema;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
@@ -13,9 +18,14 @@ import java.time.Instant;
         name = "idx_historico_problema_data",
         def = "{'problemaId': 1, 'data': -1}"
 )
+@Getter
+@Setter
+@NoArgsConstructor
 public class HistoricoProblema {
 
     @Id
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private String id;
 
     private String problemaId;
@@ -27,54 +37,4 @@ public class HistoricoProblema {
     @CreatedDate
     private Instant data;
 
-    public HistoricoProblema() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getProblemaId() {
-        return problemaId;
-    }
-
-    public void setProblemaId(String valor) {
-        problemaId = valor;
-    }
-
-    public StatusProblema getStatusAnterior() {
-        return statusAnterior;
-    }
-
-    public void setStatusAnterior(StatusProblema valor) {
-        statusAnterior = valor;
-    }
-
-    public StatusProblema getNovoStatus() {
-        return novoStatus;
-    }
-
-    public void setNovoStatus(StatusProblema valor) {
-        novoStatus = valor;
-    }
-
-    public String getObservacao() {
-        return observacao;
-    }
-
-    public void setObservacao(String valor) {
-        observacao = valor;
-    }
-
-    public String getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(String valor) {
-        usuarioId = valor;
-    }
-
-    public Instant getData() {
-        return data;
-    }
 }

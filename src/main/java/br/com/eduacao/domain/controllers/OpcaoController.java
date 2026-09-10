@@ -2,7 +2,6 @@ package br.com.eduacao.domain.controllers;
 
 import br.com.eduacao.domain.enums.CategoriaProblema;
 import br.com.eduacao.domain.enums.PerfilUsuario;
-import br.com.eduacao.domain.enums.PrioridadeProblema;
 import br.com.eduacao.domain.enums.StatusProblema;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,12 +23,6 @@ public class OpcaoController {
     @Operation(summary = "Listar as categorias de problema disponíveis")
     public List<CategoriaProblema> listarCategorias() {
         return List.of(CategoriaProblema.values());
-    }
-
-    @GetMapping("/prioridades")
-    @Operation(summary = "Listar as prioridades disponíveis")
-    public List<PrioridadeProblema> listarPrioridades() {
-        return List.of(PrioridadeProblema.values());
     }
 
     @GetMapping("/status")

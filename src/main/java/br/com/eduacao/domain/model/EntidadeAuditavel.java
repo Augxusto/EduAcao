@@ -1,10 +1,12 @@
 package br.com.eduacao.domain.model;
 
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.Instant;
 
+@Getter
 public abstract class EntidadeAuditavel {
 
     @CreatedDate
@@ -13,11 +15,4 @@ public abstract class EntidadeAuditavel {
     @LastModifiedDate
     private Instant atualizadoEm;
 
-    public Instant getCriadoEm() {
-        return criadoEm;
-    }
-
-    public Instant getAtualizadoEm() {
-        return atualizadoEm;
-    }
 }
