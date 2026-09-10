@@ -12,10 +12,8 @@ O projeto implementa uma API REST para cadastrar escolas, usuários e ocorrênci
 | Série e período | 6º semestre — 2026                                                                                                              |
 | Título da PoC | EduAção                                                                                                                         |
 | Repositório | https://github.com/Augxusto/EduAcao                                                                                             |
-| Integrantes e RAs | Guilherme Tamioso Bueno do Prado / RA: 24368069-2 <br/> Rodrigo Augusto da Silva Virgilino / RA: 24139528-2 <br/>Gustavo Cardoso / RA: 24011175-2
-|
+| Integrantes e RAs | Guilherme Tamioso Bueno do Prado / RA: 24368069-2 <br/> Rodrigo Augusto da Silva Virgilino / RA: 24139528-2 <br/>Gustavo Cardoso / RA: 24011175-2 |
 | Vídeo da primeira entrega | A preencher com o link do YouTube                                                                                               |
-| Vídeo da segunda entrega | ...                                                                                                                             |
 
 ## Problema e relação com o ODS 4
 
@@ -51,7 +49,7 @@ Não há frontend no atual momento. A demonstração atual pode ser realizada pe
 | Springdoc OpenAPI 2.8.14 | Documentação interativa da API. |
 | Spring Boot Actuator | Endpoints de saúde e informações. |
 | Maven | Dependências, compilação e testes. |
-| JUnit 5 e Mockito | Testes unitários com repositórios simulados. |
+| JUnit 5, Mockito e MockMvc | Testes de serviços e controllers, com dependências simuladas e verificação de respostas HTTP. |
 | JaCoCo 0.8.13 | Relatório e verificação de cobertura. |
 | Git e GitHub | Versionamento e disponibilização para avaliação. |
 
@@ -85,7 +83,13 @@ src/
 │   │       ├── repository/    Interfaces de persistência
 │   │       └── service/       Regras de negócio
 │   └── resources/application.yml
-└── test/java/br/com/eduacao/service/ProblemaServiceTest.java
+└── test/java/br/com/eduacao/
+    ├── domain/controllers/
+    │   ├── EscolaControllerTest.java
+    │   ├── OpcaoControllerTest.java
+    │   └── ProblemaControllerTest.java
+    └── service/
+        └── ProblemaServiceTest.java
 ```
 
 ## Banco de dados NoSQL
@@ -97,7 +101,6 @@ O banco padrão é `eduacao`. Os relacionamentos são referências por identific
 | `escolas` | `id`, `nome`, `criadoEm`, `atualizadoEm` | Instituição vinculada a usuários e problemas. |
 | `usuarios` | `id`, `nome`, `email`, `perfil`, `escolaId`, `ativo`, datas de auditoria | Referencia uma escola por `escolaId`. |
 | `problemas` | `id`, `titulo`, `descricao`, `categoria`, `prioridade`, `status`, `local`, `turma`, `usuarioId`, `escolaId`, `quantidadePessoasAfetadas`, datas de auditoria | Referencia escola e autor do relato. |
-| `historicos_problema` | `id`, `problemaId`, `statusAnterior`, `novoStatus`, `observacao`, `usuarioId`, `data` | Estrutura prevista para rastreabilidade; ainda não alimentada pelo fluxo atual. |
 
 O atributo Java `id` corresponde ao campo `_id` do MongoDB.
 
@@ -263,9 +266,20 @@ O retorno esperado contém um `id`, prioridade `ALTA` e status `ABERTO`.
 4. Repita com `EM_RESOLUCAO` e depois `RESOLVIDO`.
 5. Consulte novamente o problema para confirmar o status persistido.
 
-## Testes automatizados e cobertura ( Precisa ser ajustado futuramente )
+## Testes automatizados e cobertura
 
-O site atual contém sete testes unitários em `ProblemaServiceTest`, com JUnit 5 e Mockito. Eles verificam cadastro, aumento de prioridade por categoria agravante, escola inexistente, listagem, busca por ID, problema inexistente e atualização de status. Como os repositórios são simulados, esses testes não exigem MongoDB ativo e não comprovam a integração real com o banco.
+O site possui **17 testes**, distribuídos em quatro classes, com a inclusão de testes dos controllers de escolas, opções e problemas. Essa atualização amplia a verificação da API para atender à meta de **pelo menos 70% de cobertura de linhas** exigida.
+
+| Classe | Testes | Comportamentos verificados |
+| --- | --- | --- |
+| `ProblemaServiceTest` | 7 | Cadastro, aumento de prioridade por categoria agravante, rejeição de escola inexistente, listagem, busca por ID, problema inexistente e atualização de status. |
+| `EscolaControllerTest` | 3 | Cadastro com retorno HTTP `201`, listagem e consulta por ID com retorno `200`, além da delegação ao serviço. |
+| `OpcaoControllerTest` | 3 | Consulta de categorias, status e perfis, verificando retorno `200` e tamanho das listas conforme as enumerações. |
+| `ProblemaControllerTest` | 4 | Cadastro, listagem, consulta por ID e atualização de status, verificando respostas HTTP, campos JSON e chamadas ao serviço. |
+
+Os testes de serviço utilizam **JUnit 5 e Mockito**, com repositórios simulados. Os testes de controllers utilizam **MockMvc em modo standalone**, com serviços simulados quando aplicável. A suíte de testes não exige MongoDB ativo nem um servidor HTTP em execução.
+
+### Execução
 
 Executar os testes e gerar o relatório:
 
@@ -286,3 +300,8 @@ Resultados gerados localmente:
 - `target/site/jacoco/jacoco.xml`: relatório para processamento automatizado.
 
 O JaCoCo está configurado para exigir **70% de cobertura de linhas no conjunto do projeto (`BUNDLE`)**, na fase `verify`. `mvn test` gera o relatório, mas não executa a verificação desse limite. A configuração do limite não comprova que a cobertura foi atingida: é necessário executar `mvn clean verify` e apresentar o resultado de cada entrega.
+
+### Evidência da cobertura
+
+Após executar `mvn clean verify`, abra `target/site/jacoco/index.html` e consulte o percentual de linhas na linha **Total**. O ciclo falha se a cobertura medida estiver abaixo de 70%.
+
