@@ -53,8 +53,6 @@ class ProblemaControllerTest {
 
         problema = new Problema();
 
-        problema = new Problema();
-
         problema.setTitulo("Sem conexão no laboratório");
         problema.setDescricao("Os computadores do laboratório estão sem conexão com a internet.");
         problema.setCategoria(CategoriaProblema.TECNOLOGIA);
