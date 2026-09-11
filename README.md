@@ -13,7 +13,7 @@ O projeto implementa uma API REST para cadastrar escolas, usuários e ocorrênci
 | Título da PoC | EduAção                                                                                                                         |
 | Repositório | https://github.com/Augxusto/EduAcao                                                                                             |
 | Integrantes e RAs | Guilherme Tamioso Bueno do Prado / RA: 24368069-2 <br/> Rodrigo Augusto da Silva Virgilino / RA: 24139528-2 <br/>Gustavo Cardoso / RA: 24011175-2 |
-| Vídeo da primeira entrega | A preencher com o link do YouTube                                                                                               |
+| Vídeo da primeira entrega | https://www.youtube.com/watch?v=fbciMAZDFbs                                                                                                |
 
 ## Problema e relação com o ODS 4
 
