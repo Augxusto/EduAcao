@@ -50,7 +50,7 @@ class EscolaControllerTest {
 
         escola = new Escola();
 
-        escola.setNome("Escola Estadual Central");
+        escola.setNome("Gastão Vidigal");
     }
 
     @Test
@@ -66,7 +66,7 @@ class EscolaControllerTest {
                 )
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.nome")
-                        .value("Escola Estadual Central"));
+                        .value("Gastão Vidigal"));
 
         verify(escolaService).cadastrar(any(Escola.class));
     }
