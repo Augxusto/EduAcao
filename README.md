@@ -14,6 +14,14 @@ O projeto implementa uma API REST para cadastrar escolas, usuários e ocorrênci
 | Repositório | https://github.com/Augxusto/EduAcao                                                                                             |
 | Integrantes e RAs | Guilherme Tamioso Bueno do Prado / RA: 24368069-2 <br/> Rodrigo Augusto da Silva Virgilino / RA: 24139528-2 <br/>Gustavo Cardoso / RA: 24011175-2 |
 | Vídeo da primeira entrega | https://www.youtube.com/watch?v=fbciMAZDFbs                                                                                                |
+| Vídeo da segunda entrega | Pendente de gravação e publicação pelo grupo. |
+
+## Documentação da segunda entrega
+
+- [Documentação técnica](docs/DOCUMENTACAO_TECNICA.md): arquitetura, modelagem NoSQL e evolução implementada.
+- [Quadro de tarefas](docs/QUADRO_DE_TAREFAS.md): acompanhamento do trabalho e pendências da entrega.
+
+O commit `9bb2039` identifica a base do GitHub utilizada antes das mudanças da segunda entrega. O grupo deve confirmar qual commit corresponde à primeira entrega efetivamente enviada. A versão revisada da PoC para a segunda entrega é identificada localmente pela tag `entrega-2-poc`, na branch `codex/segunda-entrega`. A publicação no GitHub está pendente, assim como a inclusão do link do vídeo final. A tag identifica o código e a documentação revisados; a entrega acadêmica só estará completa com as pendências do quadro resolvidas.
 
 ## Problema e relação com o ODS 4
 
@@ -25,17 +33,17 @@ O EduAção propõe centralizar esses relatos e organizar informações sobre ca
 
 | Perfil | Papel na proposta |
 | --- | --- |
-| Aluno | Registrar situações e consultar seus relatos. |
+| Aluno | Identificar o autor de relatos de situações que afetam a aprendizagem. |
 | Professor | Relatar e acompanhar problemas de aprendizagem, infraestrutura e recursos. |
-| Gestor | Analisar ocorrências, acompanhar prioridades, alterar status e consultar indicadores. |
+| Gestor | Analisar ocorrências, acompanhar prioridades e alterar status. |
 
-**Autenticação e restrição de acesso por perfil ainda não estão implementadas.**
+Os perfis são dados de classificação dos usuários. A API disponibiliza as mesmas operações para seus clientes, sem autenticação ou permissões por perfil.
 
 ## Objetivos e escopo
 
-Demonstrar como o registro estruturado de problemas educacionais pode apoiar sua priorização e resolução. A proposta completa contempla cadastro, classificação, acompanhamento, histórico e indicadores para a gestão.
+Demonstrar como o registro estruturado de problemas educacionais pode apoiar sua priorização e resolução. O escopo desta PoC contempla cadastro de escolas, usuários e problemas, cálculo de prioridade, consultas, atualização de status e histórico de alterações persistido no MongoDB.
 
-Não há frontend no atual momento. A demonstração atual pode ser realizada pelo Swagger UI. Interface responsiva, login, telas de detalhes e histórico e painel de indicadores fazem parte da evolução planejada.
+A execução e a demonstração são locais, pela API e pelo Swagger UI. Frontend, login, dashboard e hospedagem estão fora do escopo desta entrega.
 
 ## Tecnologias
 
@@ -84,12 +92,8 @@ src/
 │   │       └── service/       Regras de negócio
 │   └── resources/application.yml
 └── test/java/br/com/eduacao/
-    ├── domain/controllers/
-    │   ├── EscolaControllerTest.java
-    │   ├── OpcaoControllerTest.java
-    │   └── ProblemaControllerTest.java
-    └── service/
-        └── ProblemaServiceTest.java
+    ├── domain/controllers/  Testes dos controllers e do tratamento de exceções
+    └── service/             Testes dos serviços de escolas, usuários e problemas
 ```
 
 ## Banco de dados NoSQL
@@ -100,7 +104,7 @@ O banco padrão é `eduacao`. Os relacionamentos são referências por identific
 | --- | --- | --- |
 | `escolas` | `id`, `nome`, `criadoEm`, `atualizadoEm` | Instituição vinculada a usuários e problemas. |
 | `usuarios` | `id`, `nome`, `email`, `perfil`, `escolaId`, `ativo`, datas de auditoria | Referencia uma escola por `escolaId`. |
-| `problemas` | `id`, `titulo`, `descricao`, `categoria`, `prioridade`, `status`, `local`, `turma`, `usuarioId`, `escolaId`, `quantidadePessoasAfetadas`, datas de auditoria | Referencia escola e autor do relato. |
+| `problemas` | `id`, `titulo`, `descricao`, `categoria`, `prioridade`, `status`, `local`, `turma`, `usuarioId`, `escolaId`, `quantidadePessoasAfetadas`, `historicoStatus`, datas de auditoria | Referencia escola e autor do relato; incorpora uma lista de subdocumentos de alterações de status. |
 
 O atributo Java `id` corresponde ao campo `_id` do MongoDB.
 
@@ -129,7 +133,22 @@ Todo problema é criado como `ABERTO`. O fluxo de demonstração proposto é:
 ABERTO → EM_ANALISE → EM_RESOLUCAO → RESOLVIDO
 ```
 
-A API aceita qualquer valor válido de status na atualização, sem impor essa ordem e sem gerar histórico automaticamente.
+A API aceita qualquer valor válido de status na atualização, sem impor essa ordem. Cada mudança efetiva gera automaticamente um registro em `historicoStatus`, com `statusAnterior`, `novoStatus` e `alteradoEm` (data/hora UTC). Repetir o status atual não cria outro registro. O cadastro começa com histórico vazio; problemas antigos passam a registrar as próximas mudanças, sem reconstruir eventos anteriores.
+
+O histórico é uma lista de subdocumentos armazenada dentro de cada documento da coleção `problemas`, atendendo ao requisito de objetos complexos do MongoDB. O campo é somente leitura na API e aparece nas consultas e na resposta da atualização de status. Exemplo após uma mudança:
+
+```json
+{
+  "status": "EM_ANALISE",
+  "historicoStatus": [
+    {
+      "statusAnterior": "ABERTO",
+      "novoStatus": "EM_ANALISE",
+      "alteradoEm": "2026-11-08T15:00:00Z"
+    }
+  ]
+}
+```
 
 Título, descrição, categoria, local, usuário, escola e quantidade de pessoas afetadas são obrigatórios. A quantidade mínima é 1. Título, local e turma aceitam até 120 caracteres; descrição, até 2.000. `id`, datas de auditoria, prioridade e status inicial são definidos pelo sistema.
 
@@ -264,15 +283,43 @@ O retorno esperado contém um `id`, prioridade `ALTA` e status `ABERTO`.
 2. Consulte a ocorrência em `GET /api/problemas/{id}`.
 3. Execute `PATCH /api/problemas/{id}/status` com `novoStatus=EM_ANALISE`.
 4. Repita com `EM_RESOLUCAO` e depois `RESOLVIDO`.
-5. Consulte novamente o problema para confirmar o status persistido.
+5. Consulte novamente o problema para confirmar o status persistido e os três registros em `historicoStatus`.
 
 ## Testes automatizados e cobertura
 
-O site possui **17 testes**, distribuídos em quatro classes, com a inclusão de testes dos controllers de escolas, opções e problemas. Essa atualização amplia a verificação da API para atender à meta de **pelo menos 70% de cobertura de linhas** exigida.
+### Validação com MongoDB real
+
+Em 08/11/2026, o cadastro de escola, usuário e problema, a prioridade automática, os relacionamentos e as datas de auditoria foram validados com MongoDB real. Três alterações de status geraram três subdocumentos na ordem correta; repetir o status final não duplicou eventos. Status inicial, prioridade e histórico enviados pelo cliente foram ignorados, preservando os valores definidos pelo sistema. Após encerrar e reiniciar a API, o mesmo problema continuou com status `RESOLVIDO` e três eventos no histórico.
+
+Foi usado exclusivamente o banco `eduacao_validacao_entrega2`, na porta `18080`. Os dados fictícios foram mantidos para consulta e a API temporária foi encerrada.
+
+Para reproduzir, inicie a API com Java 21 e MongoDB ativo:
+
+```powershell
+$env:MONGODB_URI = 'mongodb://localhost:27017/eduacao_validacao_entrega2'
+$env:SERVER_PORT = '18080'
+mvn org.springframework.boot:spring-boot-maven-plugin:3.4.3:run
+```
+
+Em outro terminal na raiz do projeto:
+
+```powershell
+.\scripts\validar-fluxo.ps1
+```
+
+Cada execução cria uma escola, um usuário e um problema fictícios. O script falha se alguma verificação não for atendida e, em caso de sucesso, mostra o documento consultado e `VALIDACAO APROVADA`. Para conferir a persistência após reinício, guarde o `id` retornado, reinicie a API com as mesmas variáveis e consulte `GET /api/problemas/{id}`: o status deve ser `RESOLVIDO` e o histórico deve conter três eventos. Essa validação complementar não integra a contagem de testes nem a cobertura abaixo.
+
+### Suíte automatizada
+
+A API possui **34 testes**, distribuídos em oito classes. A verificação desta etapa, executada com Java 21 e `mvn clean verify`, passou sem falhas e mediu **91,30% de cobertura de linhas** (84 de 92), acima do mínimo de 70%. Essa medição corresponde à suíte automatizada. O fluxo com MongoDB real também foi validado separadamente, conforme a seção anterior.
 
 | Classe | Testes | Comportamentos verificados |
 | --- | --- | --- |
-| `ProblemaServiceTest` | 7 | Cadastro, aumento de prioridade por categoria agravante, rejeição de escola inexistente, listagem, busca por ID, problema inexistente e atualização de status. |
+| `ProblemaServiceTest` | 11 | Cadastro, prioridade, referências, consultas e atualização de status com histórico, ordem dos eventos, repetição, problemas antigos e rejeição de status nulo. |
+| `EscolaServiceTest` | 4 | Cadastro, listagem, busca e escola inexistente. |
+| `UsuarioServiceTest` | 5 | Cadastro, validação da escola, listagem, busca e usuário inexistente. |
+| `UsuarioControllerTest` | 3 | Cadastro, listagem e consulta por ID. |
+| `ApiExceptionHandlerTest` | 1 | Resposta HTTP e mensagem para erro de argumento. |
 | `EscolaControllerTest` | 3 | Cadastro com retorno HTTP `201`, listagem e consulta por ID com retorno `200`, além da delegação ao serviço. |
 | `OpcaoControllerTest` | 3 | Consulta de categorias, status e perfis, verificando retorno `200` e tamanho das listas conforme as enumerações. |
 | `ProblemaControllerTest` | 4 | Cadastro, listagem, consulta por ID e atualização de status, verificando respostas HTTP, campos JSON e chamadas ao serviço. |

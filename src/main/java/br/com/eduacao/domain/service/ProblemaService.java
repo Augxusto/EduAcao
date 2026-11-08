@@ -3,6 +3,7 @@ package br.com.eduacao.domain.service;
 import br.com.eduacao.domain.enums.CategoriaProblema;
 import br.com.eduacao.domain.enums.PrioridadeProblema;
 import br.com.eduacao.domain.enums.StatusProblema;
+import br.com.eduacao.domain.model.AlteracaoStatus;
 import br.com.eduacao.domain.model.Problema;
 import br.com.eduacao.domain.repository.EscolaRepository;
 import br.com.eduacao.domain.repository.ProblemaRepository;
@@ -10,6 +11,8 @@ import br.com.eduacao.domain.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +26,7 @@ public class ProblemaService {
     public Problema cadastrar(Problema problema) {
         validarReferencias(problema);
         problema.setStatus(StatusProblema.ABERTO);
+        problema.setHistoricoStatus(new ArrayList<>());
         problema.setPrioridade(calcularPrioridade(problema));
         return problemaRepository.save(problema);
     }
@@ -77,7 +81,18 @@ public class ProblemaService {
     }
 
     public Problema atualizarStatus(String id, StatusProblema novoStatus) {
+        if (novoStatus == null) {
+            throw new IllegalArgumentException("O novo status é obrigatório");
+        }
         Problema problema = buscarPorId(id);
+        if (problema.getStatus() == novoStatus) {
+            return problema;
+        }
+        if (problema.getHistoricoStatus() == null) {
+            problema.setHistoricoStatus(new ArrayList<>());
+        }
+        problema.getHistoricoStatus().add(new AlteracaoStatus(
+                problema.getStatus(), novoStatus, Instant.now()));
         problema.setStatus(novoStatus);
         return problemaRepository.save(problema);
     }

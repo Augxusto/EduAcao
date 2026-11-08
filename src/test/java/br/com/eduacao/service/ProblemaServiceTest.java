@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -68,6 +70,7 @@ class ProblemaServiceTest {
         assertNotNull(resultado);
         assertEquals("Sem conexão no laboratório", resultado.getTitulo());
         assertEquals(PrioridadeProblema.ALTA, resultado.getPrioridade());
+        assertEquals(List.of(), resultado.getHistoricoStatus());
         verify(problemaRepository, times(1)).save(problema);
     }
 
@@ -125,6 +128,7 @@ class ProblemaServiceTest {
 
     @Test
     void deveAtualizarStatusDoProblema() {
+        Instant inicio = Instant.now();
         when(problemaRepository.findById("123")).thenReturn(Optional.of(problema));
         when(problemaRepository.save(any(Problema.class))).thenReturn(problema);
 
@@ -132,5 +136,55 @@ class ProblemaServiceTest {
 
         assertNotNull(resultado);
         assertEquals(StatusProblema.EM_ANALISE, resultado.getStatus());
+        assertEquals(1, resultado.getHistoricoStatus().size());
+        var alteracao = resultado.getHistoricoStatus().getFirst();
+        assertEquals(StatusProblema.ABERTO, alteracao.getStatusAnterior());
+        assertEquals(StatusProblema.EM_ANALISE, alteracao.getNovoStatus());
+        assertFalse(alteracao.getAlteradoEm().isBefore(inicio));
+        assertFalse(alteracao.getAlteradoEm().isAfter(Instant.now()));
+        verify(problemaRepository).save(problema);
+    }
+
+    @Test
+    void devePreservarOrdemDoHistorico() {
+        when(problemaRepository.findById("123")).thenReturn(Optional.of(problema));
+        when(problemaRepository.save(problema)).thenReturn(problema);
+
+        problemaService.atualizarStatus("123", StatusProblema.EM_ANALISE);
+        problemaService.atualizarStatus("123", StatusProblema.EM_RESOLUCAO);
+
+        assertEquals(2, problema.getHistoricoStatus().size());
+        assertEquals(StatusProblema.ABERTO, problema.getHistoricoStatus().get(0).getStatusAnterior());
+        assertEquals(StatusProblema.EM_ANALISE, problema.getHistoricoStatus().get(1).getStatusAnterior());
+        assertEquals(StatusProblema.EM_RESOLUCAO, problema.getHistoricoStatus().get(1).getNovoStatus());
+    }
+
+    @Test
+    void naoDeveRegistrarStatusSemAlteracao() {
+        when(problemaRepository.findById("123")).thenReturn(Optional.of(problema));
+
+        problemaService.atualizarStatus("123", StatusProblema.ABERTO);
+
+        assertEquals(0, problema.getHistoricoStatus().size());
+        verify(problemaRepository, never()).save(any());
+    }
+
+    @Test
+    void deveAtualizarProblemaAntigoSemHistorico() {
+        problema.setHistoricoStatus(null);
+        when(problemaRepository.findById("123")).thenReturn(Optional.of(problema));
+        when(problemaRepository.save(problema)).thenReturn(problema);
+
+        problemaService.atualizarStatus("123", StatusProblema.RESOLVIDO);
+
+        assertEquals(1, problema.getHistoricoStatus().size());
+        assertEquals(StatusProblema.ABERTO, problema.getHistoricoStatus().getFirst().getStatusAnterior());
+    }
+
+    @Test
+    void naoDeveAceitarStatusNulo() {
+        assertThrows(IllegalArgumentException.class,
+                () -> problemaService.atualizarStatus("123", null));
+        verify(problemaRepository, never()).save(any());
     }
 }

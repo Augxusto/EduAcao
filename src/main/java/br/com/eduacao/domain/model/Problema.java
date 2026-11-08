@@ -16,6 +16,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Document(collection = "problemas")
 @CompoundIndex(
         name = "idx_problema_filtros",
@@ -25,6 +28,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @NoArgsConstructor
 public class Problema extends EntidadeAuditavel {
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY,
+            description = "Histórico de alterações de status, armazenado como subdocumentos")
+    private List<AlteracaoStatus> historicoStatus = new ArrayList<>();
 
     @Id
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

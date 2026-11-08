@@ -3,6 +3,7 @@ package br.com.eduacao.domain.controllers;
 import br.com.eduacao.domain.enums.CategoriaProblema;
 import br.com.eduacao.domain.enums.PrioridadeProblema;
 import br.com.eduacao.domain.enums.StatusProblema;
+import br.com.eduacao.domain.model.AlteracaoStatus;
 import br.com.eduacao.domain.model.Problema;
 import br.com.eduacao.domain.service.ProblemaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.Instant;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -108,6 +110,10 @@ class ProblemaControllerTest {
     @Test
     void deveBuscarProblemaPorId() throws Exception {
 
+        problema.getHistoricoStatus().add(new AlteracaoStatus(
+                StatusProblema.EM_ANALISE, StatusProblema.ABERTO,
+                Instant.parse("2026-11-08T19:00:00Z")));
+
         when(problemaService.buscarPorId("123"))
                 .thenReturn(problema);
 
@@ -118,7 +124,11 @@ class ProblemaControllerTest {
                 .andExpect(jsonPath("$.titulo")
                         .value("Sem conexão no laboratório"))
                 .andExpect(jsonPath("$.status")
-                        .value("ABERTO"));
+                        .value("ABERTO"))
+                .andExpect(jsonPath("$.historicoStatus", hasSize(1)))
+                .andExpect(jsonPath("$.historicoStatus[0].statusAnterior").value("EM_ANALISE"))
+                .andExpect(jsonPath("$.historicoStatus[0].novoStatus").value("ABERTO"))
+                .andExpect(jsonPath("$.historicoStatus[0].alteradoEm").exists());
 
         verify(problemaService).buscarPorId("123");
     }
@@ -127,6 +137,9 @@ class ProblemaControllerTest {
     void deveAtualizarStatusDoProblema() throws Exception {
 
         problema.setStatus(StatusProblema.EM_ANALISE);
+        problema.getHistoricoStatus().add(new AlteracaoStatus(
+                StatusProblema.ABERTO, StatusProblema.EM_ANALISE,
+                Instant.parse("2026-11-08T19:00:00Z")));
 
         when(problemaService.atualizarStatus(
                 eq("123"),
@@ -139,7 +152,11 @@ class ProblemaControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status")
-                        .value("EM_ANALISE"));
+                        .value("EM_ANALISE"))
+                .andExpect(jsonPath("$.historicoStatus", hasSize(1)))
+                .andExpect(jsonPath("$.historicoStatus[0].statusAnterior").value("ABERTO"))
+                .andExpect(jsonPath("$.historicoStatus[0].novoStatus").value("EM_ANALISE"))
+                .andExpect(jsonPath("$.historicoStatus[0].alteradoEm").exists());
 
         verify(problemaService)
                 .atualizarStatus("123", StatusProblema.EM_ANALISE);
