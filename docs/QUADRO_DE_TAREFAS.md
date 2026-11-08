@@ -27,7 +27,7 @@ Nenhuma tarefa em andamento neste momento.
 | T03 | Validar o fluxo com MongoDB real | Cadastros, referências, prioridade, auditoria e histórico validados no banco separado; consulta preservada após reiniciar a API. Procedimento e script no README. |
 | T04 | Documentar o projeto e criar o quadro de tarefas | README revisado e documentação técnica criada com modelagem, arquitetura, evolução, execução e testes. |
 | T09 | Revisar e preparar a versão da PoC para publicação | Revisão concluída em 08/11/2026; 34 testes aprovados e 91,30% de cobertura. Testes de consulta e atualização conferem o histórico nas respostas HTTP. Versão identificada localmente pela tag `entrega-2-poc`. |
-| T06 | Publicar a versão revisada no GitHub | Publicação realizada em 08/11/2026: commit `ce3d0b1` integrado à `main`, branch `codex/segunda-entrega` e tag `entrega-2-poc` disponíveis no repositório. |
+| T06 | Publicar a versão revisada no GitHub | Publicação realizada em 08/11/2026: commit `ce3d0b1` integrado à `main`, branch `EduAção2.0` e tag `entrega-2-poc` disponíveis no repositório. |
 
 ## Próximas atualizações
 
