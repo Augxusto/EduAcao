@@ -21,7 +21,7 @@ O projeto implementa uma API REST para cadastrar escolas, usuários e ocorrênci
 - [Documentação técnica](docs/DOCUMENTACAO_TECNICA.md): arquitetura, modelagem NoSQL e evolução implementada.
 - [Quadro de tarefas](docs/QUADRO_DE_TAREFAS.md): acompanhamento do trabalho e pendências da entrega.
 
-O commit `9bb2039` identifica a base do GitHub utilizada antes das mudanças da segunda entrega. O grupo deve confirmar qual commit corresponde à primeira entrega efetivamente enviada. A versão revisada da PoC para a segunda entrega foi publicada no GitHub em 08/11/2026 e integrada à branch `main`. O commit `ce3d0b1`, também disponível na branch `EduAção2.0`, é identificado pela [tag `entrega-2-poc`](https://github.com/Augxusto/EduAcao/tree/entrega-2-poc). A tag preserva o código e a documentação da revisão técnica, antes desta atualização do registro de publicação. A inclusão do link do vídeo final continua pendente; a entrega acadêmica só estará completa com as pendências do quadro resolvidas.
+O commit `9bb2039` identifica a base do GitHub utilizada antes das mudanças da segunda entrega. O grupo deve confirmar qual commit corresponde à primeira entrega efetivamente enviada. A versão revisada da PoC para a segunda entrega foi publicada no GitHub em 08/11/2026 e integrada à branch `main`. O [commit `ce3d0b1`](https://github.com/Augxusto/EduAcao/commit/ce3d0b199e60c77d85a047b42157b6d860b4df47), também disponível na branch `EduAção2.0`, é identificado pela tag `EduAção2.0`. A tag preserva o código e a documentação da revisão técnica, antes desta atualização do registro de publicação. A inclusão do link do vídeo final continua pendente; a entrega acadêmica só estará completa com as pendências do quadro resolvidas.
 
 ## Problema e relação com o ODS 4
 

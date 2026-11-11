@@ -78,7 +78,7 @@ As entradas obrigatórias e os limites são validados por Jakarta Bean Validatio
 
 A base consultada não foi confirmada pelo grupo como a versão acadêmica da primeira entrega. Essa confirmação consta como pendência no quadro.
 
-A versão revisada da PoC foi publicada no GitHub em 08/11/2026 e integrada à branch `main`. O commit `ce3d0b1` está identificado pela tag `entrega-2-poc` e também disponível na branch `EduAção2.0`. A tag preserva o código e a documentação da revisão técnica, anteriores ao registro de publicação nos documentos. O vídeo e a submissão acadêmica permanecem pendentes.
+A versão revisada da PoC foi publicada no GitHub em 08/11/2026 e integrada à branch `main`. O commit `ce3d0b1` está identificado pela tag `EduAção2.0` e também disponível na branch `EduAção2.0`. A tag preserva o código e a documentação da revisão técnica, anteriores ao registro de publicação nos documentos. O vídeo e a submissão acadêmica permanecem pendentes.
 
 ## Execução e evidências de qualidade
 
