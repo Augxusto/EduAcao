@@ -15,13 +15,15 @@ O projeto implementa uma API REST para cadastrar escolas, usuários e ocorrênci
 | Integrantes e RAs | Guilherme Tamioso Bueno do Prado / RA: 24368069-2 <br/> Rodrigo Augusto da Silva Virgilino / RA: 24139528-2 <br/>Gustavo Cardoso / RA: 24011175-2 |
 | Vídeo da primeira entrega | https://www.youtube.com/watch?v=fbciMAZDFbs                                                                                                |
 | Vídeo da segunda entrega | Pendente de gravação e publicação pelo grupo. |
+| Versão da primeira entrega | [Commit `9bb2039`](https://github.com/Augxusto/EduAcao/commit/9bb2039f2f9e38f5d2322eba0610b5e87a028bd8), último commit antes do início da segunda entrega. |
+| Versão da segunda entrega | Tag `EduAção2.0` no [commit `ce3d0b1`](https://github.com/Augxusto/EduAcao/commit/ce3d0b199e60c77d85a047b42157b6d860b4df47). |
 
 ## Documentação da segunda entrega
 
 - [Documentação técnica](docs/DOCUMENTACAO_TECNICA.md): arquitetura, modelagem NoSQL e evolução implementada.
 - [Quadro de tarefas](docs/QUADRO_DE_TAREFAS.md): acompanhamento do trabalho e pendências da entrega.
 
-O commit `9bb2039` identifica a base do GitHub utilizada antes das mudanças da segunda entrega. O grupo deve confirmar qual commit corresponde à primeira entrega efetivamente enviada. A versão revisada da PoC para a segunda entrega foi publicada no GitHub em 08/11/2026 e integrada à branch `main`. O [commit `ce3d0b1`](https://github.com/Augxusto/EduAcao/commit/ce3d0b199e60c77d85a047b42157b6d860b4df47), também disponível na branch `EduAção2.0`, é identificado pela tag `EduAção2.0`. A tag preserva o código e a documentação da revisão técnica, antes desta atualização do registro de publicação. A inclusão do link do vídeo final continua pendente; a entrega acadêmica só estará completa com as pendências do quadro resolvidas.
+A versão revisada da PoC para a segunda entrega foi publicada no GitHub em 08/11/2026 e integrada à branch `main`. O projeto também está disponível na branch `EduAção2.0`.
 
 ## Problema e relação com o ODS 4
 

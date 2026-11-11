@@ -68,7 +68,7 @@ As entradas obrigatórias e os limites são validados por Jakarta Bean Validatio
 
 ## Evolução demonstrável
 
-| Aspecto | Base consultada: commit `9bb2039` | Versão de trabalho da segunda entrega |
+| Aspecto | Primeira entrega (`9bb2039`) | Segunda entrega (tag `EduAção2.0`) |
 | --- | --- | --- |
 | Modelagem | Três coleções com referências por IDs e campos simples. | Mantém as coleções e acrescenta uma lista de subdocumentos em problemas. |
 | Acompanhamento | Atualiza apenas o status atual. | Registra automaticamente estados anteriores, novos estados e datas das mudanças efetivas. |
@@ -76,7 +76,7 @@ As entradas obrigatórias e os limites são validados por Jakarta Bean Validatio
 | Evidências | Documentação e comandos da versão anterior. | Registra cobertura de 91,30%, validação real com MongoDB e consulta após reiniciar a API; inclui script reproduzível. |
 | Organização | README existente. | README revisado, documentação técnica e quadro de tarefas no repositório. |
 
-A base consultada não foi confirmada pelo grupo como a versão acadêmica da primeira entrega. Essa confirmação consta como pendência no quadro.
+O commit `9bb2039`, último commit antes do início da segunda entrega, é a referência usada para a primeira entrega.
 
 A versão revisada da PoC foi publicada no GitHub em 08/11/2026 e integrada à branch `main`. O commit `ce3d0b1` está identificado pela tag `EduAção2.0` e também disponível na branch `EduAção2.0`. A tag preserva o código e a documentação da revisão técnica, anteriores ao registro de publicação nos documentos. O vídeo e a submissão acadêmica permanecem pendentes.
 
