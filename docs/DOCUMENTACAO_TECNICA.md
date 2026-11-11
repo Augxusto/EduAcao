@@ -89,4 +89,4 @@ Com JDK 21, Maven e MongoDB disponíveis, seguir [Como executar](../README.md#co
 - `target/site/jacoco/index.html` e `jacoco.xml`: cobertura reproduzível, gerada localmente e não versionada.
 - `scripts/validar-fluxo.ps1`: validação complementar pela API, com MongoDB real, conforme configuração do README.
 
-Resultado medido em 08/11/2026: 34 testes, nenhuma falha ou erro e 84 de 92 linhas cobertas (91,30%). A validação complementar confirmou três eventos ordenados e preservados após reinício da API. Esses resultados correspondem à versão de trabalho validada e devem ser gerados novamente caso o código seja alterado antes da entrega.
+Resultado medido em 08/11/2026: 34 testes, nenhuma falha ou erro e 84 de 92 linhas cobertas (91,30%). A validação complementar confirmou três eventos ordenados e preservados após reinício da API.
