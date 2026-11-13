@@ -1,6 +1,6 @@
 # Quadro de tarefas - segunda entrega
 
-Atualizado em 08/11/2026. Este quadro passa a registrar o acompanhamento a partir desta etapa. As atividades concluídas abaixo correspondem às implementações e verificações já realizadas; não representam um histórico de movimentações anterior à criação do quadro.
+Atualizado em 13/11/2026. As atividades concluídas abaixo correspondem às implementações e verificações já realizadas; não representam um histórico de movimentações anterior à criação do quadro.
 
 ## Método de acompanhamento
 
@@ -10,7 +10,6 @@ O trabalho é dividido em tarefas pequenas, organizadas nas colunas A fazer, Em 
 
 | ID | Tarefa | Critério de conclusão | Responsável |
 | --- | --- | --- | --- |
-| T07 | Gravar e publicar o vídeo final | Vídeo de 3 a 5 minutos mostrando evolução, projeto final, funcionamento, tecnologias, testes, cobertura e resultados; link adicionado ao README. | A definir pelo grupo |
 | T08 | Preencher e enviar o modelo de entrega | Curso, série, nomes, RAs, título da PoC, link do vídeo final e link do GitHub conferidos e enviados pelo grupo. | A definir pelo grupo |
 
 ## Em andamento
@@ -28,7 +27,8 @@ Nenhuma tarefa em andamento neste momento.
 | T05 | Identificar a versão da primeira entrega | O README registra `9bb2039`, último commit antes do início da segunda entrega, como referência da primeira. |
 | T09 | Revisar e preparar a versão da PoC para publicação | Revisão concluída em 08/11/2026; 34 testes aprovados e 91,30% de cobertura. Testes de consulta e atualização conferem o histórico nas respostas HTTP. Versão identificada localmente pela tag `EduAção2.0`. |
 | T06 | Publicar a versão revisada no GitHub | Publicação realizada em 08/11/2026: commit `ce3d0b1` integrado à `main`, branch `EduAção2.0` e tag `EduAção2.0` disponíveis no repositório. |
+| T07 | Gravar e publicar o vídeo final | [Vídeo da segunda entrega](https://www.youtube.com/watch?v=prf2fHHl3eM), com 4min49s de duração e link no README. |
 
 ## Próximas atualizações
 
-Os responsáveis pelas tarefas pendentes serão definidos pelo grupo. Restam a gravação e publicação do vídeo, a inclusão do link no README e o envio da entrega acadêmica.
+Resta preencher e enviar o modelo de entrega acadêmica.
