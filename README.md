@@ -14,7 +14,7 @@ O projeto implementa uma API REST para cadastrar escolas, usuários e ocorrênci
 | Repositório | https://github.com/Augxusto/EduAcao                                                                                             |
 | Integrantes e RAs | Guilherme Tamioso Bueno do Prado / RA: 24368069-2 <br/> Rodrigo Augusto da Silva Virgilino / RA: 24139528-2 <br/>Gustavo Cardoso / RA: 24011175-2 |
 | Vídeo da primeira entrega | https://www.youtube.com/watch?v=fbciMAZDFbs                                                                                                |
-| Vídeo da segunda entrega | Pendente de gravação e publicação pelo grupo. |
+| Vídeo da segunda entrega | https://www.youtube.com/watch?v=prf2fHHl3eM |
 | Versão da primeira entrega | [Commit `9bb2039`](https://github.com/Augxusto/EduAcao/commit/9bb2039f2f9e38f5d2322eba0610b5e87a028bd8), último commit antes do início da segunda entrega. |
 | Versão da segunda entrega | Tag `EduAção2.0` no [commit `ce3d0b1`](https://github.com/Augxusto/EduAcao/commit/ce3d0b199e60c77d85a047b42157b6d860b4df47). |
 
