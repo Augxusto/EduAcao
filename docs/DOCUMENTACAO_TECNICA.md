@@ -78,7 +78,7 @@ As entradas obrigatórias e os limites são validados por Jakarta Bean Validatio
 
 O commit `9bb2039`, último commit antes do início da segunda entrega, é a referência usada para a primeira entrega.
 
-A versão revisada da PoC foi publicada no GitHub em 08/11/2026 e integrada à branch `main`. O commit `ce3d0b1` está identificado pela tag `EduAção2.0` e também disponível na branch `EduAção2.0`. A tag preserva o código e a documentação da revisão técnica, anteriores ao registro de publicação nos documentos. O [vídeo da segunda entrega](https://www.youtube.com/watch?v=prf2fHHl3eM) está disponível pelo link e tem 4min49s de duração. O grupo preencheu o modelo de entrega e enviou a atividade para avaliação.
+A versão revisada da PoC foi publicada no GitHub em 08/11/2026 e integrada à branch `main`. O commit `ce3d0b1` está identificado pela tag `EduAção2.0` e também disponível na branch `EduAção2.0`. A tag preserva o código e a documentação da revisão técnica, anteriores ao registro de publicação nos documentos. O [vídeo da segunda entrega](https://www.youtube.com/watch?v=prf2fHHl3eM) está disponível pelo link e tem 4min49s de duração.
 
 ## Execução e evidências de qualidade
 
