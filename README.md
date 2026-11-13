@@ -17,13 +17,14 @@ O projeto implementa uma API REST para cadastrar escolas, usuários e ocorrênci
 | Vídeo da segunda entrega | https://www.youtube.com/watch?v=prf2fHHl3eM |
 | Versão da primeira entrega | [Commit `9bb2039`](https://github.com/Augxusto/EduAcao/commit/9bb2039f2f9e38f5d2322eba0610b5e87a028bd8), último commit antes do início da segunda entrega. |
 | Versão da segunda entrega | Tag `EduAção2.0` no [commit `ce3d0b1`](https://github.com/Augxusto/EduAcao/commit/ce3d0b199e60c77d85a047b42157b6d860b4df47). |
+| Situação da segunda entrega | Modelo preenchido e atividade enviada para avaliação. |
 
 **Correção dos números citados no vídeo.** A execução de `mvn clean verify` aprovou **34 testes**. Os **94%** exibidos pelo JaCoCo correspondem à cobertura de instruções. A cobertura de linhas, usada para verificar o mínimo de 70% da entrega, é **91,30%** (84 de 92 linhas).
 
 ## Documentação da segunda entrega
 
 - [Documentação técnica](docs/DOCUMENTACAO_TECNICA.md): arquitetura, modelagem NoSQL e evolução implementada.
-- [Quadro de tarefas](docs/QUADRO_DE_TAREFAS.md): acompanhamento do trabalho e pendências da entrega.
+- [Quadro de tarefas](docs/QUADRO_DE_TAREFAS.md) com o registro das atividades concluídas.
 
 A versão revisada da PoC para a segunda entrega foi publicada no GitHub em 08/11/2026 e integrada à branch `main`. O projeto também está disponível na branch `EduAção2.0`.
 

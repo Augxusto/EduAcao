@@ -8,9 +8,7 @@ O trabalho é dividido em tarefas pequenas, organizadas nas colunas A fazer, Em 
 
 ## A fazer
 
-| ID | Tarefa | Critério de conclusão | Responsável |
-| --- | --- | --- | --- |
-| T08 | Preencher e enviar o modelo de entrega | Curso, série, nomes, RAs, título da PoC, link do vídeo final e link do GitHub conferidos e enviados pelo grupo. | A definir pelo grupo |
+Todas as tarefas da segunda entrega foram concluídas.
 
 ## Em andamento
 
@@ -28,7 +26,4 @@ Nenhuma tarefa em andamento neste momento.
 | T09 | Revisar e preparar a versão da PoC para publicação | Revisão concluída em 08/11/2026; 34 testes aprovados e 91,30% de cobertura. Testes de consulta e atualização conferem o histórico nas respostas HTTP. Versão identificada localmente pela tag `EduAção2.0`. |
 | T06 | Publicar a versão revisada no GitHub | Publicação realizada em 08/11/2026: commit `ce3d0b1` integrado à `main`, branch `EduAção2.0` e tag `EduAção2.0` disponíveis no repositório. |
 | T07 | Gravar e publicar o vídeo final | [Vídeo da segunda entrega](https://www.youtube.com/watch?v=prf2fHHl3eM), com 4min49s de duração e link no README. |
-
-## Próximas atualizações
-
-Resta preencher e enviar o modelo de entrega acadêmica.
+| T08 | Preencher e enviar o modelo de entrega | O grupo preencheu o modelo com os dados acadêmicos e os links do vídeo e do GitHub, e enviou a atividade para avaliação. |
